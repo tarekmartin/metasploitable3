@@ -22,7 +22,7 @@ function CompareVersions ($actualVersion, $expectedVersion, $exactMatch = $False
     $actualVersion = $actualVersion.split(".")
     $expectedVersion = $expectedVersion.split(".")
 
-    for($i=0; $i -le $expectedVersion.length; $i++) {
+    for($i=0; $i -lt $expectedVersion.length; $i++) {
         If([INT]$actualVersion[$i] -gt [INT]$expectedVersion[$i]) {
             return $True
         }
@@ -64,6 +64,7 @@ If (CompareVersions -actualVersion $vboxVersion -expectedVersion $virtualBoxMinV
 }
 
 $packerVersion = cmd.exe /c $packer -v
+$packerVersion = [regex]::Match($packerVersion, '\d+(\.\d+)+').Value
 
 If (CompareVersions -actualVersion $packerVersion -expectedVersion $packerMinVersion) {
 
